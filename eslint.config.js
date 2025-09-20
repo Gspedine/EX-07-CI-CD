@@ -1,4 +1,4 @@
-// eslint.config.js
+// eslint.config.js - VERSÃO QUE VAI FUNCIONAR
 // @ts-check
 import js from "@eslint/js";
 
@@ -24,7 +24,15 @@ export default [
         __dirname: "readonly",
         module: "readonly",
         require: "readonly",
-        // Testes
+        // ✅ JEST GLOBALS - ISSO É O QUE FALTAVA!
+        describe: "readonly",
+        it: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        test: "readonly",
         jest: "readonly"
       }
     },
@@ -36,7 +44,7 @@ export default [
 
   // ajustes específicos para testes
   {
-    files: ["tests/**/*.test.js"],
+    files: ["tests/**/*.test.js", "**/*.test.js"],
     rules: {
       "no-console": "off"
     }
