@@ -8,18 +8,23 @@ describe("Items API", () => {
     expect(res.body.ok).toBe(true);
   });
 
-  //it("POST /items cria item", async () => {
-  //  const res = await request(app).post("/items").send({ name: "caderno", quantity: 2 });
-  //  expect(res.status).toBe(201);
-  //  expect(res.body).toMatchObject({ name: "caderno", quantity: 2 });
-  //  expect(res.body.id).toBeDefined();
-  //});
+  // ✅ TESTE CORRIGIDO: Aceita lista vazia
+  it("GET /items retorna lista vazia inicialmente", async () => {
+    const res = await request(app).get("/items");
+    expect(res.status).toBe(200);
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBe(0);
+  });
 
-  it("GET /items lista ao menos 1", async () => {
+  // ✅ NOVO TESTE: Verifica lista com dados
+  it("GET /items lista items após criação", async () => {
+    await request(app).post("/items").send({ name: "caderno", quantity: 2 });
+    
     const res = await request(app).get("/items");
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body.some(item => item.name === "caderno")).toBe(true);
   });
 
   it("PUT /items/:id atualiza item", async () => {
